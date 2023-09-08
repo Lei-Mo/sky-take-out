@@ -33,9 +33,6 @@ public class EmployeeController {
 
     /**
      * 登录
-     *
-     * @param employeeLoginDTO
-     * @return
      */
     @PostMapping("/login")
     public Result<EmployeeLoginVO> login(@RequestBody EmployeeLoginDTO employeeLoginDTO) {
@@ -43,7 +40,7 @@ public class EmployeeController {
 
         Employee employee = employeeService.login(employeeLoginDTO);
 
-        //登录成功后，生成jwt令牌
+        // 登录成功后，生成jwt令牌
         Map<String, Object> claims = new HashMap<>();
         claims.put(JwtClaimsConstant.EMP_ID, employee.getId());
         String token = JwtUtil.createJWT(
@@ -51,6 +48,7 @@ public class EmployeeController {
                 jwtProperties.getAdminTtl(),
                 claims);
 
+        // EmployeeLoginVO标记了@Builder注解，可以使用buildder来构建对象
         EmployeeLoginVO employeeLoginVO = EmployeeLoginVO.builder()
                 .id(employee.getId())
                 .userName(employee.getUsername())
@@ -58,13 +56,12 @@ public class EmployeeController {
                 .token(token)
                 .build();
 
+        // 后端给前端相应数据统一使用Result
         return Result.success(employeeLoginVO);
     }
 
     /**
      * 退出
-     *
-     * @return
      */
     @PostMapping("/logout")
     public Result<String> logout() {
