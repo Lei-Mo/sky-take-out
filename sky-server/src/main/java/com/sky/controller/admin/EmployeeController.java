@@ -1,6 +1,7 @@
 package com.sky.controller.admin;
 
 import com.sky.constant.JwtClaimsConstant;
+import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.entity.Employee;
 import com.sky.properties.JwtProperties;
@@ -45,6 +46,7 @@ public class EmployeeController {
         Employee employee = employeeService.login(employeeLoginDTO);
 
         // 登录成功后，生成jwt令牌
+        // TODO jwt令牌是什么技术
         Map<String, Object> claims = new HashMap<>();
         claims.put(JwtClaimsConstant.EMP_ID, employee.getId());
         String token = JwtUtil.createJWT(
@@ -73,4 +75,14 @@ public class EmployeeController {
         return Result.success();
     }
 
+    /**
+     * 新增员工
+     */
+    @PostMapping("")
+    @ApiOperation("新增员工")
+    public Result save(@RequestBody EmployeeDTO employeeDTO) {
+        log.info("新增员工：{}", employeeDTO);
+        employeeService.save(employeeDTO);
+        return Result.success();
+    }
 }
