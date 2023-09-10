@@ -96,4 +96,17 @@ public class EmployeeController {
 
         return Result.success(pageResult);
     }
+
+    /**
+     * 启用禁用员工账号
+     * 非查询类方法Result的泛型可以为空
+     * 地址栏请求参数传参可以不用@RequestParam，只要保证变量名一致就行
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("启用禁用员工账号")
+    public Result startOrStop(@PathVariable("status") Integer status, Long id) {
+        log.info("启用禁用员工账号:{} {}", status, id);
+        employeeService.startOrStop(status, id);
+        return Result.success();
+    }
 }
