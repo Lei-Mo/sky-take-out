@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
 
 
     /**
-     * 处理SQL中主键重复的异常
+     * 处理SQL中唯一性的字段重复的异常
      */
     @ExceptionHandler
     public Result exceptionHandler(SQLIntegrityConstraintViolationException ex) {
@@ -35,9 +35,9 @@ public class GlobalExceptionHandler {
         String msg = ex.getMessage();
         if (msg.contains("Duplicate entry")) {
             String[] split = msg.split(" ");
-            String username = split[2];
+            String name = split[2];
             // 使用message常量类规范
-            String returnMsg = username + MessageConstant.ALREADY_EXISTS;
+            String returnMsg = name + MessageConstant.ALREADY_EXISTS;
             return Result.error(returnMsg);
         } else {
             return Result.error(MessageConstant.UNKNOWN_ERROR);

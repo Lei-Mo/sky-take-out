@@ -88,6 +88,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setCreateUser(BaseContext.getCurrentId());
         employee.setUpdateUser(BaseContext.getCurrentId());
 
+        // ⭐这里不用管如果唯一性字段重复怎么办，因为全局异常处理器中针对此异常会进行处理
         employeeMapper.insert(employee);
     }
 
