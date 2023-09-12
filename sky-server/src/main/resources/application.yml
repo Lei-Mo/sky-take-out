@@ -8,6 +8,7 @@ spring:
     allow-circular-references: true
   datasource:
     druid:
+      # 使用引用配置文件来针对不同的环境，比较规范
       driver-class-name: ${sky.datasource.driver-class-name}
       url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: ${sky.datasource.username}
@@ -37,3 +38,10 @@ sky:
     admin-ttl: 72000000 # 二十个小时的有效期
     # 设置前端传递过来的令牌名称
     admin-token-name: token
+  alioss:
+    # 使用引用配置文件来针对不同的环境，比较规范
+    endpoint: ${sky.alioss.endpoint}
+    access-key-id: ${sky.alioss.access-key-id}
+    access-key-secret: ${sky.alioss.access-key-secret}
+    bucket-name: ${sky.alioss.bucket-name}
+
