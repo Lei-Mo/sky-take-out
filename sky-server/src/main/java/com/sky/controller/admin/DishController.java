@@ -63,7 +63,12 @@ public class DishController {
     /**
      * 根据分类id查询菜品
      */
-    
+    @ApiOperation("根据分类id查询菜品")
+    @GetMapping("/list")
+    public Result<List<DishVO>> getByCategoryId(Long categoryId) {
+        List<DishVO> list = dishService.getByCategoryId(categoryId);
+        return Result.success(list);
+    }
 
     /**
      * 修改菜品和口味信息

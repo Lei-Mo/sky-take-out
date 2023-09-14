@@ -140,6 +140,15 @@ public class DishServiceImpl implements DishService {
         // TODO 如果是停售操作，还需要将包含当前菜品的套餐也停售
 
     }
+
+    /**
+     * 根据分类id查询菜品
+     */
+    @Override
+    public List<DishVO> getByCategoryId(Long categoryId) {
+
+        return dishMapper.getByCategoryId(categoryId);
+    }
 }
 
 

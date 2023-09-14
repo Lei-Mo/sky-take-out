@@ -35,4 +35,9 @@ public interface DishService {
      * 菜品起售和停售
      */
     void startOrStop(Integer status, Long id);
+    
+    /**
+     * 根据分类id查询菜品
+     */
+    List<DishVO> getByCategoryId(Long categoryId);
 }
