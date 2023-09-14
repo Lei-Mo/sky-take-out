@@ -96,7 +96,7 @@ public class DishServiceImpl implements DishService {
     }
 
     /**
-     * 菜品批量删除
+     * 根据id获得菜品
      */
     @Override
     public DishVO getByIdWithFlavor(Long id) {
@@ -125,6 +125,20 @@ public class DishServiceImpl implements DishService {
             flavors.forEach(dishFlavor -> dishFlavor.setDishId(dish.getId()));
             dishFlavorMapper.insertBatch(flavors);
         }
+    }
+
+    /**
+     * 菜品起售和停售
+     */
+    @Override
+    public void startOrStop(Integer status, Long id) {
+        Dish dish = new Dish();
+        dish.setStatus(status);
+        dish.setId(id);
+        dishMapper.update(dish);
+
+        // TODO 如果是停售操作，还需要将包含当前菜品的套餐也停售
+
     }
 }
 

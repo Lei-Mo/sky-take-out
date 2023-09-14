@@ -50,11 +50,10 @@ public interface DishMapper {
 
     /**
      * 更新菜品
-     *
-     * @param dish
      */
     @AutoFill(OperationType.UPDATE)
     void update(Dish dish);
+
 }
 
 
