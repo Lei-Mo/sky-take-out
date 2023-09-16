@@ -13,7 +13,7 @@
     </insert>
 
     <select id="pageQuery" resultType="com.sky.vo.SetmealVO">
-        select * from setmeal
+        select s.*, c.name as categoryName from setmeal s left join category c on s.category_id = c.id
         <where>
             <if test="name != null">
                 and name like concat("%", #{name}, "%")
@@ -34,6 +34,18 @@
             #{id}
         </foreach>
     </delete>
+
+    <update id="update">
+        update setmeal
+        set name        = #{name},
+            image       = #{image},
+            category_id = #{categoryId},
+            description = #{description},
+            price       = #{price}
+        where id = #{id}
+    </update>
+
+
 </mapper>
 
 

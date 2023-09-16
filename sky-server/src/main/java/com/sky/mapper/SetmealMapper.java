@@ -40,4 +40,16 @@ public interface SetmealMapper {
      */
     @Select("select status from setmeal where id = #{id}")
     Integer getStatusById(Long id);
+
+    /**
+     * 根据id查询
+     */
+    @Select("select * from setmeal where id = #{id}")
+    SetmealVO selectById(Long id);
+
+    /**
+     * 修改套餐
+     */
+    @AutoFill(OperationType.UPDATE)
+    void update(Setmeal setmeal);
 }
