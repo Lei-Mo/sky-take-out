@@ -10,7 +10,13 @@ import java.util.List;
 public interface SetmealDishMapper {
 
     /**
-     * 根据据菜品id查询对应套餐id
+     * 根据据一个菜品id查询对应套餐id
+     */
+    @Select("select setmeal_id from setmeal_dish where dish_id = #{dish_id}")
+    List<Long> getSetmealIdsByDishId(Long dishId);
+
+    /**
+     * 根据据多个菜品id查询对应套餐id
      */
     List<Long> getSetmealIdsByDishIds(List<Long> dishIds);
 
@@ -29,4 +35,6 @@ public interface SetmealDishMapper {
      */
     @Select("select * from setmeal_dish where setmeal_id = #{setmealId}")
     List<SetmealDish> selectBySetmealId(Long setmealId);
+
+
 }

@@ -6,10 +6,12 @@ import com.sky.constant.MessageConstant;
 import com.sky.constant.StatusConstant;
 import com.sky.dto.SetmealDTO;
 import com.sky.dto.SetmealPageQueryDTO;
+import com.sky.entity.Dish;
 import com.sky.entity.Setmeal;
 import com.sky.entity.SetmealDish;
 import com.sky.exception.BaseException;
 import com.sky.exception.DeletionNotAllowedException;
+import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetmealDishMapper;
 import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
@@ -26,9 +28,11 @@ import java.util.List;
 @Service
 public class SetmealServiceImpl implements SetmealService {
     @Autowired
-    SetmealMapper setmealMapper;
+    private SetmealMapper setmealMapper;
     @Autowired
-    SetmealDishMapper setmealDishMapper;
+    private SetmealDishMapper setmealDishMapper;
+    @Autowired
+    private DishMapper dishMapper;
 
     /**
      * 添加套餐
@@ -88,7 +92,9 @@ public class SetmealServiceImpl implements SetmealService {
 
     /**
      * 修改套餐
+     * ⭐同时修改多张表记得使用事务注解
      */
+    @Transactional
     @Override
     public void update(SetmealDTO setmealDTO) {
         Setmeal setmeal = new Setmeal();
@@ -101,7 +107,26 @@ public class SetmealServiceImpl implements SetmealService {
         List<SetmealDish> setmealDishes = setmealDTO.getSetmealDishes();
         setmealDishes.forEach(setmealDish -> setmealDish.setSetmealId(setmeal.getId()));
         setmealDishMapper.insertBatch(setmealDishes);
+    }
 
+    /**
+     * 修改套餐启售、停售状态
+     */
+    @Override
+    public void updateStatus(Integer status, Long id) {
+        Setmeal setmeal = new Setmeal();
+        setmeal.setStatus(status);
+        setmeal.setId(id);
+        if (status == StatusConstant.ENABLE) {
+            // ⭐如果套餐内有停售的菜品则套餐无法启售
+            List<Dish> dishList = dishMapper.getBySetmealId(setmeal.getId());
+            for (Dish dish : dishList) {
+                if (dish.getStatus() == StatusConstant.DISABLE) {
+                    throw new BaseException(MessageConstant.SETMEAL_ENABLE_FAILED);
+                }
+            }
+        }
+        setmealMapper.update(setmeal);
     }
 }
 

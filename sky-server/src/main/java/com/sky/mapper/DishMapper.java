@@ -58,6 +58,11 @@ public interface DishMapper {
      * 根据分类id查询菜品
      */
     List<DishVO> getByCategoryId(Long categoryId);
+
+    /**
+     * 根据套餐id查询菜品
+     */
+    List<Dish> getBySetmealId(Long setmealId);
 }
 
 

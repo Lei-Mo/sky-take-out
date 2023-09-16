@@ -48,8 +48,9 @@ public interface SetmealMapper {
     SetmealVO selectById(Long id);
 
     /**
-     * 修改套餐
+     * 修改套餐信息
      */
     @AutoFill(OperationType.UPDATE)
     void update(Setmeal setmeal);
+
 }
