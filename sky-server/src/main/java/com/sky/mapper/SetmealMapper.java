@@ -9,6 +9,8 @@ import com.sky.vo.SetmealVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface SetmealMapper {
     /**
@@ -22,9 +24,20 @@ public interface SetmealMapper {
      */
     @AutoFill(OperationType.INSERT)
     void insert(Setmeal setmeal);
-    
+
     /**
      * 分页查询
      */
     Page<SetmealVO> pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
+
+    /**
+     * 批量删除
+     */
+    void deleteByIds(List<Long> ids);
+
+    /**
+     * 根据id获取状态
+     */
+    @Select("select status from setmeal where id = #{id}")
+    Integer getStatusById(Long id);
 }
