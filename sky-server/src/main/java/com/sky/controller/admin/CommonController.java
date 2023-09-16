@@ -27,10 +27,15 @@ public class CommonController {
     @Autowired
     private AliOssUtil aliOssUtil;
 
+    /**
+     * 文件上传功能
+     *
+     * @param file 待上传的文件
+     * @return 文件上传之后的地址
+     */
     @PostMapping("/upload")
     @ApiOperation("文件上传")
     public Result<String> upload(MultipartFile file) {
-        log.info("文件上传：{}", file);
         // 使用UUID来重命名，防止文件名重复
         String originalFilename = file.getOriginalFilename();
         String extensionName = originalFilename.substring(originalFilename.lastIndexOf("."));
@@ -43,7 +48,6 @@ public class CommonController {
         } catch (IOException e) {
             return Result.error(MessageConstant.UPLOAD_FAILED);
         }
-
 
     }
 }
