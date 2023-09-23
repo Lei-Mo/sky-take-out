@@ -80,7 +80,7 @@ public class CategoryController {
     @ApiOperation("根据类型查询分类")
     @GetMapping("/list")
     public Result<List<Category>> queryByType(@RequestParam("type") Integer type) {
-        List<Category> list = categoryService.queryByType(type);
+        List<Category> list = categoryService.list(type);
         return Result.success(list);
     }
 
