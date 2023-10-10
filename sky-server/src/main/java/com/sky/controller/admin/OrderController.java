@@ -5,6 +5,7 @@ import com.sky.mapper.OrderMapper;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.OrderService;
+import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderVO;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,15 @@ public class OrderController {
     public Result<PageResult> conditionSearch(OrdersPageQueryDTO pageQueryDTO) {
         PageResult pageResult = orderService.conditionSearch(pageQueryDTO);
         return Result.success(pageResult);
+    }
+
+    /**
+     * 各个状态的订单数量统计
+     */
+    @GetMapping("/statistics")
+    public Result<OrderStatisticsVO> statistics() {
+        OrderStatisticsVO orderStatisticsVO = orderService.statistics();
+        return Result.success(orderStatisticsVO);
     }
 
     /**
