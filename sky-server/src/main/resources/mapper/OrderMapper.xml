@@ -45,4 +45,27 @@
         where id = #{id}
     </update>
 
+    <select id="pageQuery" resultType="com.sky.entity.Orders">
+        select * from orders
+        <where>
+            <if test="number != null">
+                and number like concat("%", #{number}, "%")
+            </if>
+            <if test="phone != null">
+                and phone like concat("%", #{phone}, "%")
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <!-- ⭐xml中不能直接写< > 等符号，需要使用&gt;和&lt; 或者使用<![CDATA[ ]]>进行包裹 -->
+            <!-- 类型一致的日期可以直接进行比较 -->
+            <if test="beginTime != null">
+                and order_time &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null">
+                and endTime <![CDATA[<=]]> #{endTime}
+            </if>
+        </where>
+    </select>
+
 </mapper>
