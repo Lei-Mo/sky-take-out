@@ -1,5 +1,6 @@
 package com.sky.controller.admin;
 
+import com.sky.dto.OrdersConfirmDTO;
 import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.mapper.OrderMapper;
 import com.sky.result.PageResult;
@@ -9,10 +10,7 @@ import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderVO;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController("AdminOrderController")
 @RequestMapping("/admin/order")
@@ -48,5 +46,14 @@ public class OrderController {
     public Result<OrderVO> details(@PathVariable("id") Long orderId) {
         OrderVO orderVO = orderService.details(orderId);
         return Result.success(orderVO);
+    }
+
+    /**
+     * 接单
+     */
+    @PutMapping("/confirm")
+    public Result confirm(@RequestBody OrdersConfirmDTO ordersConfirmDTO) {
+        orderService.confirm(ordersConfirmDTO);
+        return Result.success();
     }
 }
