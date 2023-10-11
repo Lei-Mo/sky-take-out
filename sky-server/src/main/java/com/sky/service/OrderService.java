@@ -63,4 +63,14 @@ public interface OrderService {
      * 完成订单
      */
     void complete(Long id);
+
+    /**
+     * 查询历史订单（用户端）
+     */
+    PageResult pageQueryForUser(Integer page, Integer pageSize, Integer status);
+
+    /**
+     * 再来一单
+     */
+    void repetition(Long orderId);
 }

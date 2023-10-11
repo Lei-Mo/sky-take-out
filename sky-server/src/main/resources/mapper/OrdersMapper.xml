@@ -68,4 +68,13 @@
         </where>
     </select>
 
+    <select id="getByUserId" resultType="com.sky.entity.Orders">
+        select *
+        from orders
+        where user_id = #{userId}
+        <if test="status != null">
+            and status = #{status}
+        </if>
+    </select>
+
 </mapper>

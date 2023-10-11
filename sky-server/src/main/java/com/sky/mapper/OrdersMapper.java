@@ -39,4 +39,9 @@ public interface OrdersMapper {
      */
     @Select("select count(*) from orders where status = #{status}")
     Integer countStatus(Integer toBeConfirmed);
+
+    /**
+     * 通过用户id查询订单
+     */
+    Page<Orders> getByUserId(Long userId, Integer status);
 }

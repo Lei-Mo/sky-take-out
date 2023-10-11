@@ -311,6 +311,48 @@ public class OrderServiceImpl implements OrderService {
         orders.setStatus(Orders.COMPLETED);
         ordersMapper.update(orders);
     }
+
+    /**
+     * 查询历史订单（用户端）
+     */
+    @Override
+    public PageResult pageQueryForUser(Integer page, Integer pageSize, Integer status) {
+        PageHelper.startPage(page, pageSize);
+        Long userId = BaseContext.getCurrentId();
+        Page<Orders> pageContent = ordersMapper.getByUserId(userId, status);
+
+        List<OrderVO> orderVOList = new ArrayList<>();
+        for (Orders orders : pageContent) {
+            List<OrderDetail> orderDetail = orderDetailMapper.getByOrderId(orders.getId());
+            OrderVO orderVO = new OrderVO();
+            BeanUtils.copyProperties(orders, orderVO);
+            orderVO.setOrderDetailList(orderDetail);
+            orderVOList.add(orderVO);
+        }
+
+        return new PageResult(pageContent.getTotal(), orderVOList);
+    }
+
+    /**
+     * 再来一单
+     */
+    @Override
+    public void repetition(Long orderId) {
+        // ⭐再来一单的业务流程不是直接下单，而是将订单的商品添加到当前购物车中
+        Long userId = BaseContext.getCurrentId();
+        Orders orders = ordersMapper.getById(orderId);
+
+        List<OrderDetail> orderDetailList = orderDetailMapper.getByOrderId(orderId);
+        List<ShoppingCart> shoppingCartList = new ArrayList<>();
+        for (OrderDetail orderDetail : orderDetailList) {
+            ShoppingCart shoppingCart = new ShoppingCart();
+            BeanUtils.copyProperties(orderDetail, shoppingCart);
+            shoppingCart.setCreateTime(LocalDateTime.now());
+            shoppingCart.setUserId(userId);
+            shoppingCartList.add(shoppingCart);
+        }
+        shoppingCartMapper.insertBatch(shoppingCartList);
+    }
 }
 
 
