@@ -73,4 +73,9 @@ public interface OrderService {
      * 再来一单
      */
     void repetition(Long orderId);
+
+    /**
+     * 客户催单
+     */
+    void reminder(Long orderId);
 }
