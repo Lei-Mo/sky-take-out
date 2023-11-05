@@ -72,7 +72,7 @@
     <select id="list" resultType="Dish" parameterType="Dish">
         select * from dish
         <where>
-            <if test="name != null">
+            <if test="name != null and name != ''">
                 and name like concat('%',#{name},'%')
             </if>
             <if test="categoryId != null">

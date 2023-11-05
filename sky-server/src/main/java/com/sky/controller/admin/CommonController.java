@@ -29,9 +29,6 @@ public class CommonController {
 
     /**
      * 文件上传功能
-     *
-     * @param file 待上传的文件
-     * @return 文件上传之后的地址
      */
     @PostMapping("/upload")
     @ApiOperation("文件上传")

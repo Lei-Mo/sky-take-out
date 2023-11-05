@@ -22,8 +22,6 @@ public class AliOssUtil {
 
     /**
      * 文件上传
-     *
-     * @return 返回的上传到的目标网址
      */
     public String upload(byte[] bytes, String objectName) {
 

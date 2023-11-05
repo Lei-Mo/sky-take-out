@@ -15,17 +15,17 @@
     <select id="pageQuery" resultType="com.sky.vo.SetmealVO">
         select s.*, c.name as categoryName from setmeal s left join category c on s.category_id = c.id
         <where>
-            <if test="name != null">
-                and name like concat("%", #{name}, "%")
-            </if>
-            <if test="categoryId != null">
-                and category_id = #{categoryId}
+            <if test="name != null and name != ''">
+                and s.name like concat('%', #{name}, '%')
             </if>
             <if test="status != null">
-                and status = #{status}
+                and s.status = #{status}
+            </if>
+            <if test="categoryId != null">
+                and s.category_id = #{categoryId}
             </if>
         </where>
-        order by create_time desc
+        order by s.create_time desc
     </select>
 
     <delete id="deleteByIds">
